@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AREADRIP | Street & Trap Giyim</title>
+<meta name="description" content="areadrip: drip ve trap tarzı sokak giyimi.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#2c2c2e; --panel:#363638; --panel2:#404042; --line:#4e4e51;
+    --text:#f4f4f4; --muted:#b0b0b4; --silver:#d6d6d8; --red:#ff2d2d;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:'Helvetica Neue',Arial,sans-serif;line-height:1.5}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+  .ticker{background:var(--silver);color:#000;font-weight:800;font-size:12px;letter-spacing:.15em;text-transform:uppercase;padding:8px 0;overflow:hidden;white-space:nowrap}
+  .ticker span{display:inline-block;padding-left:100%;animation:scroll 24s linear infinite}
+  @keyframes scroll{to{transform:translateX(-100%)}}
+
+  header{position:sticky;top:0;z-index:20;background:rgba(44,44,46,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-family:'Pirata One','UnifrakturCook',Georgia,serif;font-weight:400;letter-spacing:.06em;font-size:34px;line-height:1;text-transform:none;color:var(--text);text-shadow:2px 2px 0 #000}
+  .logo b{color:var(--silver);font-weight:400}
+  nav a{margin-left:24px;font-size:13px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);transition:.2s}
+  nav a:hover{color:var(--text)}
+  .cart-btn{display:inline-flex;align-items:center;gap:8px;background:none;border:1px solid var(--line);color:var(--text);padding:8px 14px;cursor:pointer;font-weight:700;letter-spacing:.08em;margin-left:24px}
+  .cart-btn:hover{border-color:var(--silver)}
+
+  /* Hero arka planı: sokakta drip giyen erkek fotoğrafı. Fotoğrafı img/hero.jpg olarak ekle. */
+  /* Katalog butonu ve açılır menü */
+  .nav-left{display:flex;align-items:center;gap:18px}
+  .burger{width:42px;height:42px;background:none;border:1px solid var(--line);cursor:pointer;display:grid;place-content:center;gap:5px;padding:0}
+  .burger span{display:block;width:20px;height:2px;background:var(--text);transition:.3s}
+  .burger:hover{border-color:var(--silver)}
+  .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .burger.open span:nth-child(2){opacity:0}
+  .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .catalog{position:absolute;top:100%;left:0;right:0;background:var(--panel);border-bottom:1px solid var(--line);overflow:hidden;
+    clip-path:inset(0 0 100% 0);visibility:hidden;transition:clip-path .45s ease,visibility 0s .45s;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+  .catalog.open{clip-path:inset(0 0 0 0);visibility:visible;transition:clip-path .45s ease,visibility 0s}
+  .catalog ul{list-style:none;max-width:1180px;margin:0 auto;padding:10px 20px 18px}
+  .catalog li{opacity:0;transform:translateY(-10px);transition:opacity .3s,transform .3s}
+  .catalog.open li{opacity:1;transform:none}
+  .catalog.open li:nth-child(1){transition-delay:.10s}.catalog.open li:nth-child(2){transition-delay:.15s}.catalog.open li:nth-child(3){transition-delay:.20s}
+  .catalog.open li:nth-child(4){transition-delay:.25s}.catalog.open li:nth-child(5){transition-delay:.30s}.catalog.open li:nth-child(6){transition-delay:.35s}.catalog.open li:nth-child(7){transition-delay:.40s}
+  .catalog button{width:100%;text-align:left;background:none;border:none;border-bottom:1px solid var(--line);color:var(--text);padding:15px 4px;font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;cursor:pointer;display:flex;justify-content:space-between;transition:.2s}
+  .catalog li:last-child button{border-bottom:none}
+  .catalog button:hover{color:#fff;padding-left:14px;background:var(--panel2)}
+  .catalog button i{font-style:normal;color:var(--muted)}
+  .empty{grid-column:1/-1;color:var(--muted);padding:40px 0}
+  .clear{background:none;border:1px solid var(--line);color:var(--muted);padding:7px 14px;cursor:pointer;font-size:12px;text-transform:uppercase;letter-spacing:.1em}
+  .clear:hover{color:var(--text);border-color:var(--silver)}
+  .hero{padding:130px 0 110px;position:relative;isolation:isolate;
+    background:linear-gradient(90deg,rgba(44,44,46,.92) 0%,rgba(44,44,46,.55) 55%,rgba(44,44,46,.25) 100%),
+               url('img/hero.jpg') center/cover no-repeat,
+               linear-gradient(135deg,#5a5a5e,#3a3a3d 55%,#6a6a6e)}
+  .hero h1{text-shadow:0 2px 18px rgba(0,0,0,.45)}
+  .hero h1{font-size:clamp(44px,9vw,120px);line-height:.95;font-weight:900;text-transform:uppercase;letter-spacing:-.02em}
+  .hero h1 em{font-style:normal;color:transparent;-webkit-text-stroke:2px var(--silver)}
+  .hero p{max-width:480px;color:var(--muted);margin:24px 0 32px}
+  .badge{display:inline-block;background:var(--red);color:#fff;font-weight:800;font-size:12px;letter-spacing:.14em;padding:6px 12px;margin-bottom:20px}
+  .btn{display:inline-block;background:var(--text);color:#000;font-weight:800;text-transform:uppercase;letter-spacing:.12em;padding:15px 30px;border:none;cursor:pointer;font-size:13px;transition:.2s}
+  .btn:hover{background:var(--silver);transform:translate(-3px,-3px);box-shadow:5px 5px 0 #444}
+
+  section{padding:70px 0}
+  .title{display:flex;align-items:end;justify-content:space-between;margin-bottom:30px;gap:16px;flex-wrap:wrap}
+  .title h2{font-size:32px;text-transform:uppercase;letter-spacing:.05em;font-weight:900}
+  .filters button{background:none;border:1px solid var(--line);color:var(--muted);padding:7px 14px;margin-left:6px;cursor:pointer;font-size:12px;text-transform:uppercase;letter-spacing:.1em}
+  .filters button.on,.filters button:hover{border-color:var(--silver);color:var(--text)}
+
+  /* Ürün kartları */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,320px));gap:22px}
+  .card{background:var(--panel);border:1px solid var(--line);transition:.25s;cursor:pointer}
+  .card:hover{border-color:var(--silver);transform:translateY(-4px)}
+  .img{aspect-ratio:2/3;display:grid;place-items:center;position:relative;background-size:cover;background-position:center}
+  .ph{font-weight:900;color:rgba(255,255,255,.1);font-size:56px;letter-spacing:.05em}
+  .tag{position:absolute;top:10px;left:10px;background:var(--red);color:#fff;font-size:11px;font-weight:800;padding:4px 8px;letter-spacing:.1em}
+  .info{padding:16px}
+  .info small{color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-size:11px}
+  .info h3{font-size:15px;text-transform:uppercase;letter-spacing:.05em;margin:2px 0 8px}
+  .prices{display:flex;align-items:baseline;gap:10px}
+  .now{color:var(--red);font-weight:900;font-size:19px}
+  .was{color:var(--muted);text-decoration:line-through;font-size:14px}
+
+  .perks{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:40px 0}
+  .perk b{display:block;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
+  .perk span{color:var(--muted);font-size:14px}
+
+  form{display:grid;gap:12px;max-width:520px}
+  input,textarea{background:var(--panel);border:1px solid var(--line);color:var(--text);padding:14px;font:inherit}
+  input:focus,textarea:focus{outline:none;border-color:var(--silver)}
+  footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-size:13px;text-align:center}
+
+  /* Ürün detay penceresi */
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:40;display:none;align-items:center;justify-content:center;padding:20px;overflow:auto}
+  .overlay.open{display:flex}
+  .modal{background:var(--panel);border:1px solid var(--line);width:min(980px,100%);position:relative;padding:28px;margin:auto}
+  .x{position:absolute;top:10px;right:14px;background:none;border:none;color:var(--text);font-size:28px;cursor:pointer;z-index:2}
+  .pd{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:32px;align-items:stretch}
+  /* sol: fotoğraf alanı */
+  .gallery{display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:start}
+  .thumbs{display:grid;gap:10px}
+  .thumb{aspect-ratio:1;border:1px solid var(--line);cursor:pointer;background-size:cover;background-position:center;display:grid;place-items:center;color:var(--muted);font-size:10px;letter-spacing:.1em}
+  .thumb.on{border-color:var(--text)}
+  .main{aspect-ratio:2/3;background-size:cover;background-position:center;display:grid;place-items:center;border:1px solid var(--line)}
+  /* sağ: fiyat üstte (fotoğrafın üst kenarı), açıklama ortada, bedenler altta (fotoğrafın alt kenarı) */
+  .side{display:flex;flex-direction:column;justify-content:space-between;gap:20px}
+  .side .top .cat{color:var(--muted);text-transform:uppercase;letter-spacing:.12em;font-size:11px}
+  .side .top h2{font-size:22px;text-transform:uppercase;letter-spacing:.04em;margin:2px 0 0}
+  .pricebox{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .pricebox .now{font-size:32px}
+  .pricebox .was{font-size:18px}
+  .pricebox .off{background:var(--red);color:#fff;font-size:11px;font-weight:800;padding:3px 8px;letter-spacing:.1em}
+  .desc{color:var(--silver);font-size:15px;margin-top:14px}
+  .sizebox label{display:block;text-transform:uppercase;letter-spacing:.12em;font-size:12px;color:var(--muted);margin-bottom:8px}
+  .sizes{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+  .sizes button{background:none;border:1px solid var(--line);color:var(--text);padding:11px 0;font-size:13px;cursor:pointer;font-weight:700}
+  .sizes button:hover{border-color:var(--silver)}
+  .sizes button.on{background:var(--text);color:#000;border-color:var(--text)}
+  .add{margin-top:14px;width:100%;background:var(--text);color:#000;border:none;padding:15px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;cursor:pointer;font-size:13px}
+  .add:hover{background:var(--silver)}
+  @media(max-width:760px){.pd{grid-template-columns:1fr}.gallery{grid-template-columns:1fr}.thumbs{grid-template-columns:repeat(4,1fr);order:2}}
+
+  /* Sepet */
+  .drawer{position:fixed;top:0;right:0;height:100%;width:min(400px,100%);background:var(--panel);border-left:1px solid var(--line);z-index:50;transform:translateX(100%);transition:.3s;display:flex;flex-direction:column}
+  .drawer.open{transform:none}
+  .drawer h3{padding:20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;text-transform:uppercase;letter-spacing:.1em}
+  .drawer h3 button{background:none;border:none;color:var(--text);font-size:22px;cursor:pointer}
+  #items{flex:1;overflow:auto;padding:20px;display:grid;gap:14px;align-content:start}
+  .row{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:14px}
+  .row button{background:none;border:none;color:var(--muted);cursor:pointer}
+  .foot{padding:20px;border-top:1px solid var(--line)}
+  .total{display:flex;justify-content:space-between;font-weight:800;font-size:18px;margin-bottom:14px}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--text);color:#000;font-weight:800;padding:12px 22px;transition:.3s;z-index:70}
+  .toast.show{transform:translateX(-50%)}
+  @media(max-width:640px){nav a{display:none}}
+</style>
+</head>
+<body>
+
+<div class="ticker"><span>★ 1000 TL ÜSTÜNE KARGO BEDAVA &nbsp;&nbsp;&nbsp; ★ 1000 TL ÜSTÜNE KARGO BEDAVA &nbsp;&nbsp;&nbsp; ★ 1000 TL ÜSTÜNE KARGO BEDAVA &nbsp;&nbsp;&nbsp; ★ 1000 TL ÜSTÜNE KARGO BEDAVA</span></div>
+
+<header>
+  <div class="wrap nav">
+    <div class="nav-left"><button class="burger" id="catBtn" aria-label="Katalog" aria-expanded="false" aria-controls="catalog"><span></span><span></span><span></span></button><a href="#top" class="logo" aria-label="areadrip">area<b>drip</b></a></div>
+    <div style="display:flex;align-items:center">
+      <nav><a href="#urunler">Ürünler</a><a href="#hakkimizda">Hakkımızda</a><a href="#iletisim">İletişim</a></nav>
+      
+    </div>
+  </div>
+  <div class="catalog" id="catalog" aria-hidden="true"><ul id="catList"></ul></div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <span class="badge">TÜM ÜRÜNLERDE %15 İNDİRİM</span>
+      <h1>Sokağın<br><em>tarzı</em><br>sende</h1>
+      <p>Oversize hoodie'ler ve trap kültüründen ilham alan parçalar. Stilini sahaya taşı.</p>
+      <a href="#urunler" class="btn">Koleksiyonu Gör</a>
+    </div>
+  </div>
+
+  <section id="urunler">
+    <div class="wrap">
+      <div class="title">
+        <h2>Koleksiyon</h2>
+        <div class="filters" id="filters"></div><button class="clear" id="clearFilter" style="display:none">× Tüm ürünler</button>
+      </div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section id="hakkimizda">
+    <div class="wrap">
+      <div class="title"><h2>Hakkımızda</h2></div>
+      <p style="max-width:640px;color:var(--muted)">areadrip, sokak kültürü ve trap estetiğinden beslenen bir giyim markasıdır. Amacımız; rahat kesimli, cesur duruşlu ve uygun fiyatlı parçaları herkesin ulaşabileceği hale getirmek. (Bu metni kendi hikayenle değiştir.)</p>
+    </div>
+  </section>
+
+  <section id="iletisim">
+    <div class="wrap">
+      <div class="title"><h2>İletişim</h2></div>
+      <form id="contact">
+        <input required placeholder="Adın">
+        <input required type="email" placeholder="E-posta">
+        <textarea required rows="4" placeholder="Mesajın"></textarea>
+        <button class="btn" type="submit">Gönder</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>© <span id="yr"></span> areadrip. Tüm hakları saklıdır. · Instagram · TikTok · WhatsApp</footer>
+
+<!-- Ürün detay penceresi -->
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal">
+    <button class="x" id="closeModal" aria-label="Kapat">×</button>
+    <div class="pd">
+      <div class="gallery">
+        <div class="thumbs" id="thumbs"></div>
+        <div class="main" id="main"></div>
+      </div>
+      <div class="side">
+        <div class="top">
+          <div class="pricebox" id="pbox"></div>
+          <div class="cat" id="pcat" style="margin-top:14px"></div>
+          <h2 id="pname"></h2>
+          <p class="desc" id="pdesc"></p>
+        </div>
+        <div class="sizebox">
+          <label>Bedenler</label>
+          <div class="sizes" id="sizes"></div>
+          <button class="add" id="addBtn">WhatsApp'tan Bilgi Al</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ AYARLAR ============ */
+const DISCOUNT = 0.15;                       // tüm ürünlere %15 indirim (0 yaparsan indirim kalkar)
+const SIZES = ["XS","S","M","L","XL","XXL"];
+const WHATSAPP = "905000000000";             // kendi numaran (başında 90, boşluksuz). "Bilgi Al" butonu bunu kullanır
+
+/* ============ ÜRÜNLER ============
+   price: indirimsiz (liste) fiyat. İndirimli fiyat otomatik hesaplanır.
+   images: ürün fotoğraflarının yolları, örn. ["img/hoodie-1.jpg","img/hoodie-2.jpg","img/hoodie-3.jpg"]
+   Boş bırakırsan 3 adet gri yer tutucu görünür.
+   Tedarikçi görsellerini kullanmadan önce kullanım şartlarını kontrol et. */
+const PRODUCTS = [
+  {id:1, name:"White Fox Kadın Oversize Hoodie", cat:"Hoodie", price:1190, sized:true,
+   images:["img/hoodie-3.avif","img/hoodie-4.avif","img/hoodie-1.avif","img/hoodie-2.avif"],
+   desc:"Kadın oversize kalıp, düşük omuzlu ve kanguru cepli kapüşonlu hoodie. İçi şardonlu, yumuşak kumaş; önde pembe puf baskılı yazı. Rahat kesim, normal bedeninden alabilirsin."}
+];
+const SHADES = ["#262626","#1a1a1a","#323232","#202020"]; // yer tutucu gri tonları
+const LABELS = ["ÖN","ARKA","DETAY"];
+
+/* ============ YARDIMCI ============ */
+const $ = s => document.querySelector(s);
+const fmt = n => n.toLocaleString("tr-TR") + " ₺";
+const sale = p => Math.round(p.price * (1 - DISCOUNT));
+const pct = Math.round(DISCOUNT*100);
+function photoStyle(p,i){
+  const src = p.images && p.images[i];
+  return src ? `background-image:url('${src}');background-repeat:no-repeat` : `background:linear-gradient(${135+i*40}deg,${SHADES[(p.id+i)%SHADES.length]},#0b0b0b)`;
+}
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),1800); }
+
+/* ============ VİTRİN ============ */
+let filter = "Hepsi";
+function renderFilters(){
+  const cats = ["Hepsi", ...new Set(PRODUCTS.map(p=>p.cat))];
+  if(cats.length<=2){ $("#filters").innerHTML=""; return; }  // tek kategori varsa filtre gösterme
+  $("#filters").innerHTML = cats.map(c=>`<button class="${c===filter?'on':''}" data-c="${c}">${c}</button>`).join("");
+  $("#filters").querySelectorAll("button").forEach(b=>b.onclick=()=>{filter=b.dataset.c;renderFilters();renderGrid();});
+}
+function renderGrid(){
+  const list = PRODUCTS.filter(p=>filter==="Hepsi"||p.cat===filter);
+  $("#clearFilter").style.display = filter==="Hepsi" ? "none" : "";
+  document.querySelector(".title h2").textContent = filter==="Hepsi" ? "Koleksiyon" : filter;
+  if(!list.length){ $("#grid").innerHTML = '<p class="empty">Bu kategoride şu an ürün yok, yakında eklenecek.</p>'; return; }
+  $("#grid").innerHTML = list.map(p=>`
+    <article class="card" data-id="${p.id}">
+      <div class="img" style="${photoStyle(p,0)}">${(p.images&&p.images[0])?'':'<span class="ph">AD</span>'}<span class="tag">-%${pct}</span></div>
+      <div class="info">
+        <small>${p.cat}</small>
+        <h3>${p.name}</h3>
+        <div class="prices"><span class="now">${fmt(sale(p))}</span><span class="was">${fmt(p.price)}</span></div>
+      </div>
+    </article>`).join("");
+  document.querySelectorAll(".card").forEach(c=>c.onclick=()=>openProduct(+c.dataset.id));
+}
+
+/* ============ KATALOG MENÜSÜ ============ */
+const CATALOG = ["Ayakkabı","Hoodie","Mont","Aksesuar","T-shirt","Pantolon","Alt Eşofman"];
+// Not: ürünlerin "cat" alanı bu isimlerle aynı olmalı (örn. cat:"T-shirt")
+function setCatalog(open){
+  $("#catalog").classList.toggle("open",open);
+  $("#catBtn").classList.toggle("open",open);
+  $("#catBtn").setAttribute("aria-expanded",open);
+  $("#catalog").setAttribute("aria-hidden",!open);
+}
+$("#catList").innerHTML = CATALOG.map(c=>`<li><button data-c="${c}">${c}<i>→</i></button></li>`).join("");
+$("#catList").querySelectorAll("button").forEach(b=>b.onclick=()=>{
+  filter=b.dataset.c; renderFilters(); renderGrid(); setCatalog(false);
+  $("#urunler").scrollIntoView({behavior:"smooth"});
+});
+$("#clearFilter").onclick = ()=>{ filter="Hepsi"; renderFilters(); renderGrid(); };
+$("#catBtn").onclick = ()=>setCatalog(!$("#catalog").classList.contains("open"));
+document.addEventListener("click",e=>{ if(!e.target.closest("header")) setCatalog(false); });
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") setCatalog(false); });
+
+/* ============ ÜRÜN DETAYI ============ */
+let current=null, curSize=null;
+function openProduct(id){
+  current = PRODUCTS.find(p=>p.id===id); curSize=null;
+  const p = current;
+  $("#pcat").textContent = p.cat;
+  $("#pname").textContent = p.name;
+  $("#pdesc").textContent = p.desc;
+  $("#pbox").innerHTML = `<span class="now">${fmt(sale(p))}</span><span class="was">${fmt(p.price)}</span><span class="off">-%${pct}</span>`;
+  const n = (p.images && p.images.length) ? p.images.length : 3;
+  $("#thumbs").innerHTML = Array.from({length:n},(_,i)=>i).map(i=>`<div class="thumb" data-i="${i}" style="${photoStyle(p,i)}">${(p.images&&p.images[i])?'':(LABELS[i]||"FOTO")}</div>`).join("");
+  $("#thumbs").querySelectorAll(".thumb").forEach(t=>t.onclick=()=>showPhoto(+t.dataset.i));
+  showPhoto(0);
+  const sizeBox = document.querySelector(".sizebox label");
+  if(p.sized){
+    sizeBox.style.display="block";
+    $("#sizes").style.display="grid";
+    $("#sizes").innerHTML = SIZES.map(s=>`<button data-s="${s}">${s}</button>`).join("");
+    $("#sizes").querySelectorAll("button").forEach(b=>b.onclick=()=>{
+      curSize=b.dataset.s;
+      $("#sizes").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));
+    });
+  }else{
+    sizeBox.style.display="none"; $("#sizes").style.display="none"; $("#sizes").innerHTML="";
+  }
+  $("#overlay").classList.add("open");
+  document.body.style.overflow="hidden";
+}
+function showPhoto(i){
+  const p=current;
+  const m=$("#main");
+  m.setAttribute("style",photoStyle(p,i));
+  m.innerHTML = (p.images&&p.images[i])?'':`<span class="ph" style="font-size:72px">${LABELS[i]}</span>`;
+  $("#thumbs").querySelectorAll(".thumb").forEach((t,k)=>t.classList.toggle("on",k===i));
+}
+function closeProduct(){ $("#overlay").classList.remove("open"); document.body.style.overflow=""; }
+$("#closeModal").onclick = closeProduct;
+$("#overlay").onclick = e=>{ if(e.target.id==="overlay") closeProduct(); };
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeProduct(); });
+/* Satış yok: "Bilgi Al" butonu WhatsApp'ta ürün hakkında mesaj açar (beden seçilmişse onu da yazar). */
+$("#addBtn").onclick = ()=>{
+  const p=current;
+  const msg = encodeURIComponent(`Merhaba, "${p.name}" hakkında bilgi almak istiyorum.` + (curSize?` Beden: ${curSize}.`:""));
+  window.open(`https://wa.me/${WHATSAPP}?text=${msg}`,"_blank");
+};
+
+$("#contact").onsubmit = e=>{ e.preventDefault(); toast("Mesajın alındı"); e.target.reset(); };
+$("#yr").textContent = new Date().getFullYear();
+renderFilters(); renderGrid();
+</script>
+</body>
+</html>
